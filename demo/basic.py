@@ -308,6 +308,76 @@ for line in f :
 f.close()
 print(list8)
 
+#### 面向对象
+# 类 继承 导入类
+
+## 创建一个Car 类
+class Car() :
+    """ 类的文档说明 : 汽车目前价值估计程序 """
+    def __init__(self,make,model,year): ## self 必不可少，且必须位于其他形参前面
+        ## 可通过对象访问的变量称为属性
+        self.make = make
+        self.model = model
+        self.year = year
+        self.current_year = 2018 # 设置默认值， 如果外面没有修改这个值，默认是2018
+
+    # 通过方法来修改默认值
+    def update_year(self,new_year):
+        self.current_year = new_year
+
+    def detection(self):
+        duration = self.current_year - self.year
+        price = 30 - 2 * duration
+        long_name = '你的' + self.make + self.model + '到目前已经行驶了' + str(duration) + '年' + '目前价值' + str(price) + '万'
+        return long_name
+
+## 实例化car对象
+my_car = Car('Audi','A6',2013)
+print(my_car.year)
+#my_car.current_year = 2020 # 这里修改了默认值
+my_car.update_year(2020)
+result = my_car.detection()
+print(result)
+
+your_car = Car('BMW','c300',2014)
+print(your_car.year)
+print(your_car.detection())
+
+### 类的继承， 在 python里面 父类要位于子类的前面（同一个文件）
+# 创建一个子类
+class ElectricCar(Car):
+
+    def __init__(self,make,model,year): # 子类的构造函数中需要和父类的构造函数中的参数相同
+        # super 函数将父类和子类关联起来。 让 python 调用 ElectricCar 的父类的方法 __init__()
+        super().__init__(make,model,year)
+
+    # 子类特有的方法
+    def battery(self,capacity):
+        self.capacity_num = capacity
+        print('您选择的电池容量为：',self.capacity_num,'kwh')
+
+    # 重写父类的方法
+    def detection(self):
+        duration = self.current_year - self.year
+        price = 30 - duration - (500 / self.capacity_num)
+        long_name = '你的' + self.make + self.model + '到目前已经行驶了' + str(duration) + '年' + '目前价值' + str(price) + '万'
+        return long_name
+
+
+## 实例化汽车对象
+my_tesla = ElectricCar('tesla','s',2017)
+print(my_tesla.battery(200))
+print(my_tesla.year)
+print(my_tesla.detection())
+
+### python 类的引入
+# python 中四种 import
+# 1. from 模块名 import 类名  eg: from car_file import Car
+# 2. 也可以一个模块中一次性导入多个类 eg: from car_file import Car, ElectricCar
+# 3. import 模块名（导入整个模块，在使用过程中需要以句点的形式访问模块中的类 eg ： car_file.Car, car_file.ElectricCar）
+# 4. 导入模块中的所有类   from 模块名 import *
+
+
 
 
 
