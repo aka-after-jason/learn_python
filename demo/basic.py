@@ -250,7 +250,7 @@ print(dict_1.popitem())
 # f.writelines(lines): 直接将列表类型的各元素连接起来写入文件f。
 # 文件路径： 相对路径、绝对路径
 
-f = open('/Users/yuwenbin/Documents/jason/python/files/jason.txt','w')
+# f = open('/Users/yuwenbin/Documents/jason/python/files/jason.txt','w')
 #f = open('../files/jason.txt','r+')
 #f.write('hello python')
 #print(f.read())
@@ -259,12 +259,54 @@ f = open('/Users/yuwenbin/Documents/jason/python/files/jason.txt','w')
 # for line in f :
 #     print(line)
 
-f.write('i love angel \n')
-f.write('angel loves jason')
-list4 = ['1','2','3','4']
-f.writelines(list4)
+# f.write('i love angel \n')
+# f.write('angel loves jason')
+# list4 = ['1','2','3','4']
+# f.writelines(list4)
+
+# f.close()
+
+
+### .csv 格式的文件
+# 一种通用的，相对简单的文件格式，存储的文件一般采用 .csv 为扩展名。
+# 一维数据保存为 csv 格式后，各元素采用逗号分隔，形成一行，这里的逗号是英文逗号。
+# 在商业和科学上广泛应用，大部分编辑器都支持直接读入或保存为csv格式
+
+
+### 一维数据的读写
+# 写入文件
+# list5 = ['Shanghai','Beijing','Manila','Pasig']
+# f = open('../files/jason.csv','w')
+# f.write(','.join(list5)+'\n')
+# f.close()
+
+# 读取文件内容
+# f = open('../files/jason.csv','r')
+# list6 = f.read().strip('\n').split('.') # 这里以列表的形式返回
+# f.close()
+# print(list6)
+
+
+### 二维数据的读写
+## 二维数据的写入
+# list7 = [
+#     ['Shanghai','Beijing','Tianjin'],
+#     ['Anhui','Hunan','Zhejiang']
+# ]
+# f = open('../files/jason.csv','w')
+# for row in list7 :
+#     f.write(','.join(row)+'\n')
+#
+# f.close()
+
+## 二维数据的读取
+f = open('../files/jason.csv','r')
+list8 = []
+for line in f :
+    list8.append(line.strip('\n').split(','))
 
 f.close()
+print(list8)
 
 
 
