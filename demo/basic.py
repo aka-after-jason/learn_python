@@ -378,6 +378,138 @@ print(my_tesla.detection())
 # 4. 导入模块中的所有类   from 模块名 import *
 
 
+##### python 中库的使用（标准库 和  三方库）
+
+## 标准库 time库、random库、turtle库
+## import time
+## import random
+## import turtle
+
+# time 库
+# time库是python提供的处理时间标准库。 time 库提供系统级精确计时器的计时功能，
+#   可以用来分析程序性能，也可以让程序暂停运行时间
+# time 库的功能主要分为 3 个方面：
+#   1. 时间处理
+#   2. 时间格式化
+#   3. 计时
+# 常用方法：
+#   时间处理：
+#   time.time() : 获取当前时间戳。当前时间与1970年1月1日0时0分0秒的时间差（以秒为单位）
+#   time.gmtime() ： 获取当前时间戳对应的 struct_time 对象
+#   time.localtime()：获取当前时间戳对应的本地时间的 struct_time 对象。 注意结果与 gmtime 的区别，UTC 时间以自动转化为北京时间
+#   time.ctime()：获取当前时间戳对应的易读字符串表示，内部会调用 time.localtime() 函数以输出当地时间
+#
+#   时间格式化：
+#   time.mktime(t)：函数将 struct_time 对象 t 转换为时间戳，注意 t 代表当地时间
+#   time.strftime(t)：该方法利用一个格式字符串，对时间格式进行表达
+#   time.strptime()：与 strftime() 方法完全相反，用于提取字符串中时间来生成 struct_time 对象，可以很灵活的作为 time 模块的输入接口
+#
+#   计时：
+#   time.sleep()：推迟调用线程的运行，可通过参数 secs 指定秒数，表示进程挂起(睡眠)的时间
+#   time.monotonic()：
+#   time.perf_counter()：
+import time # 引入time库
+
+print(time.time())
+print(time.gmtime())
+print(time.localtime())
+print(time.ctime())
+
+#print(time.mktime(time.localtime()))
+#print(time.strftime())
+#print(time.strptime())
+
+
+
+# random 库
+# 使用 random 库主要目的是生成随机数
+# 常用函数
+# random()：生成一个 [0.0,1.0]之间的随机小数
+# seed(a=None)：初始化随机数种子，默认值为当前系统时间
+# randint(a,b)：生成一个[a,b]之间的整数
+# randrange(start,stop,[step])：生成一个[start,stop]之间以step为步长的随机整数
+# uniform(a,b)：生成一个[a,b]之间的随机小数
+# choice(seq)：从序列类型(如列表)中随机返回一个元素
+# shuffle(seq)：将序列类型中元素随机排列，返回打乱后的序列
+# sample(pop,k)：从 pop 类型中随机选取 k 个元素，以列表类型返回
+import random # 引入random 库
+print(random.random())
+print(random.seed())
+print(random.randint(0,10))
+print(random.randrange(1,20,2))
+print(random.uniform(10,20))
+print(random.choice([1,2,3,4]))
+list9 = [1,2,3,4,5,6]
+print(list9)
+random.shuffle(list9)
+print(list9)
+print(random.sample(list9,3))
+
+# turtle 库
+# turtle 库是能够进行基本的图形绘制的标准库
+# turtle 库包含100多个功能函数，主要包括3类：
+#   1.窗体函数
+#   2.画笔状态函数
+#   3.画笔运动函数
+#
+#   turtle库绘制图形基本框架：
+#   一个小海龟在坐标系中爬行，其爬行轨迹形成了绘制图形。对于小海龟来说，有"前进"、"后退"、"旋转"等爬行行为，对坐标系的探索
+#   也通过"前进方向"、"后退方向" 和 "右侧方向" 等小海龟自身角度方位来完成
+
+## 窗体函数
+#   turtle.setup(width,height,startx,starty)
+#   作用：设置主窗体的大小和位置
+#   参数说明：
+#   width : 窗口宽度，如果是整数值，表示像素值，如果是小数，表示窗口宽度与屏幕的比例
+#   height : 如果是整数值，表示像素值，如果是小数，表示窗口高度与屏幕的比例
+#   startx : 窗口左侧与屏幕左侧的像素距离，如果值是 None，窗口位于屏幕水平中央
+#   starty : 窗口顶部与屏幕顶部的像素距离，如果值是 None，窗口位于屏幕垂直中央
+#   需要与 turtle.done() 进行配合
+
+#   画笔运动函数
+#   forward()：沿着当前方向前进指定距离
+#   backward()：沿着当前相反方向后退指定距离
+#   right(angle)：向右旋转angle角度
+#   left(angle)：向左旋转angle角度
+#   goto(x,y)：移动到绝对坐标(x,y)处
+#   setx()：将当前x轴移动到指定位置
+#   sety()：将当前y轴移动到指定位置
+#   seth(angle)：设置当前朝向为angle角度
+#   home()：设置当前画笔位置为原点，朝向东
+#   circle(radius,e)：绘制一个指定半径r和角度e的圆或弧形
+#   dot(r,color)：绘制一个指定半径r和颜色color的圆点
+#   undo()：撤销画笔最后一个动作
+#   speed()：设置画笔的绘制速度，参数为0-10之间
+
+#   画笔状态函数
+#   pendown()：放下画笔
+#   penup()：提起画笔，与 pendown()配对使用
+#   pensize(width)：设置画笔线条的粗细
+#   color()：设置画笔的颜色
+#   begin_fill()：填充图形前，调用该方法
+#   end_fill()：填充图形结束
+#   filling()：返回填充的状态， True 为填充，False为未填充
+#   clear()：清空当前窗口，但不改变当前画笔的位置
+#   reset()：清空当前窗口，并重置位置等状态为默认值
+#   screensize()：设置画布的长和宽
+#   hideturtle()：隐藏画笔的turtle形状
+#   showturtle()：显示画笔的turtle形状
+#   isvisible()：如果turtle可见，则返回True
+import turtle # turtle库的使用
+
+turtle.setup(600,400)
+jason = turtle.Turtle()
+for i in range(30):
+    jason.forward(i * 15)
+    jason.right(144)
+turtle.done()
+
+
+
+
+
+
+
 
 
 
