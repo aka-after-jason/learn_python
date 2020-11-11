@@ -407,17 +407,56 @@ print(my_tesla.detection())
 #   计时：
 #   time.sleep()：推迟调用线程的运行，可通过参数 secs 指定秒数，表示进程挂起(睡眠)的时间
 #   time.monotonic()：
-#   time.perf_counter()：
+#   time.perf_counter()：返回一个性能计数器的值(在分秒内)，即一个具有最高可用分辨率的时钟，以测量短时间
 import time # 引入time库
 
+## 时间戳处理函数
+# 获得当前时间戳
 print(time.time())
+# 获取本地时间，以全球时间为标准
 print(time.gmtime())
+# 获取本地时间 以北京时间为标准
 print(time.localtime())
+# 以易读字符串的形式显示时间，内部会调用time.localtime()函数
 print(time.ctime())
 
-#print(time.mktime(time.localtime()))
-#print(time.strftime())
-#print(time.strptime())
+## 时间格式化函数
+# 将 struct_time 对象转换为时间戳
+localtime = time.localtime()
+print(time.mktime(localtime))
+# time.strftime()函数是时间格式化最有效的方法，几乎可以以任何通用格式输出时间。该方法利用一个格式字符串，对时间格式进行表达
+print(time.strftime('%Y-%m-%d %H:%M:%S',localtime))
+# time.strptime()方法与 time.strftime() 方法完全相反，用于提取字符串中时间来生成 struct_time 对象
+#timeString = '2020-11-11 10:45:10'
+#print(time.strptime(timeString,'%Y-%m-%d %H:%M:%S'))
+timeString = '2020-11-11'
+print(time.strptime(timeString,'%Y-%m-%d')) # 这里的格式要与定义的字符串格式一一对应
+
+## 计时
+
+# 获取时间差
+# start_time = time.time()
+# time.sleep(2)
+# last_time = time.time()
+# print(last_time-start_time)
+
+# time.perf_counter() 可以用来计算时间差
+time1 = time.perf_counter()
+time2 = time.perf_counter()
+print(time1,time2)
+
+## 模拟进度条显示
+scale = 50
+print('------------程序开始执行')
+start_time = time.perf_counter()
+for i in range(scale + 1) :
+    a = '*' * i
+    b = '.' * (scale - i)
+    c = (i / scale) * 100
+    dur = time.perf_counter() - start_time
+    print('\r{:^3.0f}%[{}->{}]{:.2f}s'.format(c,a,b,dur),end='') # \r 表示将光标的位置回退到本行的开头位置
+    time.sleep(0.02)
+print('\n------------程序结束')
 
 
 
@@ -433,17 +472,17 @@ print(time.ctime())
 # shuffle(seq)：将序列类型中元素随机排列，返回打乱后的序列
 # sample(pop,k)：从 pop 类型中随机选取 k 个元素，以列表类型返回
 import random # 引入random 库
-print(random.random())
-print(random.seed())
-print(random.randint(0,10))
-print(random.randrange(1,20,2))
-print(random.uniform(10,20))
-print(random.choice([1,2,3,4]))
-list9 = [1,2,3,4,5,6]
-print(list9)
-random.shuffle(list9)
-print(list9)
-print(random.sample(list9,3))
+# print(random.random())
+# print(random.seed())
+# print(random.randint(0,10))
+# print(random.randrange(1,20,2))
+# print(random.uniform(10,20))
+# print(random.choice([1,2,3,4]))
+# list9 = [1,2,3,4,5,6]
+# print(list9)
+# random.shuffle(list9)
+# print(list9)
+# print(random.sample(list9,3))
 
 # turtle 库
 # turtle 库是能够进行基本的图形绘制的标准库
@@ -497,12 +536,106 @@ print(random.sample(list9,3))
 #   isvisible()：如果turtle可见，则返回True
 import turtle # turtle库的使用
 
-turtle.setup(600,400)
-jason = turtle.Turtle()
-for i in range(30):
-    jason.forward(i * 15)
-    jason.right(144)
-turtle.done()
+# turtle.setup(600,400)
+# jason = turtle.Turtle()
+# for i in range(30):
+#     jason.forward(i * 15)
+#     jason.right(144)
+# turtle.done()
+
+
+### 第三方库
+# 常用第三方库
+# 网络爬虫：requests, scrapy
+# 数据分析：numpy, scipy, pandas
+# 文本处理：pdfminer, openpyxl, python-docx, beautifulsoup4
+# 数据可视化：matplotlib, TVTK, mayavi
+# 用户图形界面：PyQt5, wxPython, PyGTK
+# 机器学习：scikit-learn, TensorFlow, Theano
+# Web开发：Django, Pyramid, Flask
+# 游戏开发：Pygame, Panda3D, cocos2d
+# 更多第三方库：PIL, SymPy, NLTK, WeRoBot, MyQR
+
+# 网络爬虫
+# 网络爬虫是自动进行HTTP访问并捕获HTML页面的程序
+# request库
+#   是一个简洁且简单的处理HTTP请求的第三方库。优点：程序编写过程更接近正常URL访问过程，该库建立在 urllib3 基础上
+
+# scrapy库
+#   是python开发的一个快速的、高层次的web获取框架。不同于简单的网络爬虫功能，
+#   scrapy框架本身包含了成熟网络爬虫系统所应该具有的部分共用功能，它是一个半成品，任何人都可以根据
+#   需求方便的利用框架已有的功能经过简单扩展实现专业的网络爬虫系统
+
+# 数据分析
+# numpy库
+#   是一种开源数值计算扩展第三方库，用于处理数据类型相同的多维数组，可以用来存储和处理大型矩阵，
+#   比python语言提供的列表要高效得多
+# scipy库
+#   是一款方便、易用、转为科学和工程设计的python工具包，它是在numpy库的基础上增加了众多的数学、科学以及工程计算中常用的库函数
+# pandas库
+#   pandas是基于numpy扩展的一个重要第三方库，pandas最初被作为金融数据分析工具而开发
+
+# 文本处理
+# pdfminer库
+#   是一个可以从PDF文档中提取各类信息的第三方库，能够完全获取并分析PDF的文本数据，并且获取PDF中文本的准确位置、字体、行数等信息
+# openpyxl库
+#   是一个处理Excel文档的python第三方库
+# python-docx库
+#   是一个处理word文档的python第三方库
+# beautifulsoup4库
+#   用于解析HTML和XML
+
+# 数据可视化
+# 数据可视化是指根据数据特点将其展示位易于理解的图形过程。
+# matplotlib库
+#   主要进行二维图标数据展示，广泛用于科学计算的数据可视化
+# TVTK库
+#   是一个开源、跨平台、支持平行处理的图形应用函数库，它是专业可编程的三维可视化工具
+# mayavi库
+#   在VTK基础之上开发的，可以更为方便开发实用的三维可视化工具
+
+# 用户图形界面
+# python标准库内置了一个GUI库(Tkinter),但过于陈旧，开发控件也很有限。
+# PyQt5库
+#   它有超过620个类和近6000个函数和方法。它是python中最为成熟的商业级第三方库，可以在Windows、Linux和macOS 等操作系统上跨平台使用
+# wxPython库
+#   可以轻松的创建健壮可靠、功能强大的图形用户界面
+# PyGTK库
+#   PyGTK具有跨平台性，利用它编写的代码能够不加修改的稳定运行在各个操作系统中
+
+# 机器学习
+# 机器学习是人工智能领域的一个重要分支，python也是机器学习和人工智能的重要基础语言
+# scikit-learn库
+#   是一个简单高效的数据挖掘和数据分析工具，基于numpy、scipy 和 matplotlib库构建，专门针对机器学习应用而发展起来
+#   的一款开源框架，基本功能包括：分类、回归、聚类、数据降维、模型选择和数据预处理
+# TensorFlow库
+#   是谷歌基于DistBelief进行研发的第二代人工智能学习系统，也是用来支撑AlphaGo系统的后台框架。应用十分广泛，
+#   从语音识别或图像识别到机器翻译或自动跟踪等，既可以运行在万台服务器的数据中心，也可以运行在智能手机或嵌入式设备中。
+# Theano库
+#   为执行深度学习中大规模神经网络算法的运算而设计，擅长处理多维数组，偏向底层开发
+
+# web开发
+# Django库
+#   Diango是python生态中最流行的开源web应用框架。提供了开发网站经常用到的模块，
+#   Django的开发理念鼓励快速开发，减少程序员建立一个高性能web应用所花费的时间和精力，形成一站式解决方案
+# Pyramid库
+#   是一个通用、开源的python web 应用程序开发框架，让python开发者更简单的创建web应用。
+#   相比 Django 是一个小巧、快速、灵活的开源python web框架
+# Flask库
+#   是轻量级web应用框架，相比 Django 和 Pyramid,它也被称为微框架。使用Flask开发web应用十分方便，甚至几行代码即可建立一个小型网站
+
+# 游戏开发
+# Pygame库
+#   是面向游戏开发入门的第三方库，除了制作游戏外，还用于制作多媒体应用程序
+# Panda3D库
+#   是一个开源、跨平台的3D渲染和游戏开发库，简单说，它是一个3D游戏引擎，支持Python和C++两种语言
+# cocos2d库
+#   是一个构建2D游戏和图形界面交互式应用的框架，能够利用GPU进行加速
+
+
+
+
+
 
 
 
