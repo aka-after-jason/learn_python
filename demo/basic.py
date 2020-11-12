@@ -632,7 +632,131 @@ import turtle # turtle库的使用
 # cocos2d库
 #   是一个构建2D游戏和图形界面交互式应用的框架，能够利用GPU进行加速
 
+# PyInstaller库
+#   作用：能够在Windows、Linux、macOS 等操作系统下将 python源文件打包，变成直接可运行的可执行文件
+#   优点：通过对源文件打包，python程序可以在没有安装python环境中运行，也可以作为一个独立文件方便传递和管理
+#   打包方法：PyInstaller <Python源程序文件名>
+#            执行完毕后，源文件所在目录将生成 dist 和 build两个文件夹。最终的打包程序在 dist内部与源文件同名的目录中。
+#            可以通过 -F 参数对python源文件生成一个独立的可执行文件：
+#               PyInstaller -F <源程序文件名>
+#   PyInstaller 常用参数：
+#   -h, --help : 查看帮助
+#   -D, --onedir: 默认值，生成dist目录
+#   -F，--onefile: 在dist文件夹中只生成独立的打包文件
+#   -i <图标文件名.ico> : 指定打包程序使用的图标(icon)文件
 
+# 图片转换为 ico 格式的网址： http://www.bitbug.net/
+
+
+
+### 第三方库的安装
+# 安装方法：
+#   1. 安装包管理工具：easy_install, pip(推荐使用)
+#   2. 源文件安装
+#   3. Pycharm 安装
+#
+#   pip 是一个现代的、通用的python包管理工具。提供了对python包的查找、下载、安装、卸载等功能
+#   安装一个库的命令格式： pip install <库名>
+#   卸载一个库的命令格式： pip uninstall <库名>
+#   列出已安装的库：pip list
+#   列出某个已安装库的详细信息的命令格式：pip show
+
+# 注意：新建一个项目时，项目解释器如果选择不同，需要重新安装第三方库
+# 第三方库默认下载地址 ： https://pypi.python.org/simple
+
+
+## 解决安装第三方库慢的方法：
+# 如果下载慢，可以选择国内镜像地址：
+# https://pypi.tuna.tsinghua.edu.cn/simple/  清华大学镜像
+# http://pypi.douban.com/simple/    豆瓣镜像
+# http://mirrors.aliyun.com/pypi/simple/ 阿里镜像
+
+# jieba 库的概述
+# 由于中文文本中的单词不是通过空格或者标点符号分割，中文及类似语言存在一个重要的"分词"问题。
+# 分词原理：
+#   利用一个中文词库，将待分的内容与分词词库进行比对，通过图结构和动态规划方法找到最大概率的词组。除了分词，
+#   jieba还提供增加自定义中文单词的功能
+#
+# 三种分词模式：
+#   1. 精确模式：将句子最精确的切开，适合文本分析； jieba.lcut(s)
+#   2. 全模式：把句子中所有可以成词的词语都扫描出来，速度非常快，但是不能解决歧义 jieba.lcut(s,cut_all=True)
+#   3. 搜索引擎模式：在精确模式基础上，对长词再次切分，提高召回率，适合用于搜索引擎分词：jieba.lcut_for_search(s)
+
+### jieba 库的使用
+import jieba
+
+# 精确模式(推荐使用，这个模式不会产生冗余单词)
+text = '由于中文文本中的单词不是通过空格或者标点符号分割'
+print(jieba.lcut(text))
+# 全模式
+print(jieba.lcut(text,cut_all = True))
+# 搜索引擎模式
+print(jieba.lcut_for_search(text))
+# jieba.add_word()函数的使用，用于添加单词，这里将 afterjason 合并成一个单词
+name = 'akaafterjason'
+print(jieba.lcut(name))
+jieba.add_word('afterjason')
+print(jieba.lcut(name))
+
+
+### wordcloud库
+# 概述
+# 什么是词云？
+#   以词语为基本单元，根据其在文本中出现的频率设计不同大小以形成视觉上不同效果，形成"关键词云层" 或 "关键词渲染"，
+#   从而使读者只要"一撇"即可领略文本的主旨
+# 词云的原理？
+#   在生成词云时，wordcloud 默认会以空格或标点为分隔符对目标文本进行分词处理。对于中文文本，分词处理需要由用户来完成。
+#   一般步骤是先将文本分词处理，然后以空格拼接，再调用wordcloud库函数
+# 核心函数？
+#   wordcloud库的核心是 WordCloud类，所有的功能都封装在WordCloud类中,使用时需要实例化一个WordCloud类的对象，
+#   并调用其 generate(text)方法将text文本转化为词云。
+
+# WordCloud对象创建的常用参数
+# font_path : 指定字体文件的完整路径，默认为 None
+# width: 生成图片的宽度，默认 400 像素
+# height: 生成图片的高度，默认 200 像素
+# mask：词云形状，默认 None，即方形图
+# min_font_size:词云中最小的字体字号，默认是4号
+# font_step:字号步进间隔，默认是1
+# max_font_size:词云中最大的字体字号，默认是None，根据高度自动调节
+# max_words:词云中最大词数，默认200
+# stopwords:被排除词列表，排除词不在词云中显示
+# background_color: 图片背景颜色，默认黑色
+
+### wordcloud 库的使用
+import wordcloud
+
+# demo1
+# 文本
+wd_text = "Jason love Angelica. I miss Angelica"
+# 实例化一个wd对象
+wd = wordcloud.WordCloud().generate(wd_text);
+# 生成图片
+wd.to_file('../files/jason.png')
+
+# demo2
+wd_text1 = '程序设计语言是计算机能够理解和识别用户操作意图的一种交互体系，它按照特定规则组织计算机指令'
+# 对于中文文本，分词需要由用户自己来完成，这里使用 jieba 库来分词（使用精确模式）
+jieba_words = jieba.lcut(wd_text1)
+print(jieba_words)
+new_words = ' '.join(jieba_words) # 使用空格拼接
+print(new_words)
+wd1 = wordcloud.WordCloud(font_path="../files/msyh.TTF",width=500,height=300).generate(new_words)
+wd1.to_file('../files/wd.jpg')
+
+### PyQt5库的使用
+# from PyQt5.QtWidgets import QApplication, QWidget,QPushButton # 引入 PyQt5.QtWidgets 模块
+# from PyQt5.QtGui import QIcon
+# import sys
+#
+# app = QApplication(sys.argv) # sys.argv 是一组命令行参数的列表
+# window = QWidget() # QWidget控件是一个用户界面的基本控件，这里是一个窗口(window)
+# window.resize(350,250) # 窗口宽350px，高250px
+# window.move(600,300) # 修改控件位置的方法
+# window.setWindowTitle('jaosn') # 给窗口设置标题
+# window.setWindowIcon(QIcon('../files/jason.png'))
+# window.show() # 能让控件在桌面上显示
+# sys.exit(app.exec_()) # 退出
 
 
 
